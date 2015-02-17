@@ -63,7 +63,7 @@ PathLocation CorrelateNode(const NodeInfo* node, const Location& location, const
     if(!filter(edge)) {
       GraphId id(tile->id());
       id.fields.id = node->edge_index() + (edge - start_edge);
-      correlated.CorrelateEdge(std::move(id), static_cast<float>(!edge->forward()));
+      correlated.CorrelateEdge(std::move(id), 0.f);
     }
   }
 
@@ -200,6 +200,7 @@ PathLocation EdgeSearch(const Location& location, GraphReader& reader, EdgeFilte
     }
   }
 
+  //TODO: if the tile is pretty sparse anyway just search the whole thing
   //we only want to look at edges that are a decently close to our input, however if none
   //of them are close we just assume its a pretty empty tile and search the whole thing
   if(close.size() == 0)
